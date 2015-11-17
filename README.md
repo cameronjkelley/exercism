@@ -1,1 +1,1 @@
-# Solutions to [Exercism](http://exercism.io)
+# Solutions to [Exercism.io](http://exercism.io)
