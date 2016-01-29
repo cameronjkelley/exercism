@@ -8,7 +8,7 @@ Bob.prototype.hey = function(input) {
 	} else if (telling(input)) {
 		return "Whatever.";
 	} else {
-		return"Fine. Be that way!";
+		return "Fine. Be that way!";
 	}
 };
 
