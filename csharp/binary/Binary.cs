@@ -20,4 +20,5 @@ public class Binary
   private static bool ValidInput(char input)
   {
     return input == '0' || input == '1';
+  }
 }
