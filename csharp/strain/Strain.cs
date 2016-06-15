@@ -13,7 +13,6 @@ public static class Strain
     return Filter(collection, x => !predicate(x));
   }
 
-  // From C# in Depth (http://csharpindepth.com/Articles/Chapter5/Closures.aspx)
   private static IEnumerable<T> Filter<T>(IEnumerable<T> source, Func<T, bool> predicate)
   {
     List<T> result = new List<T>();
