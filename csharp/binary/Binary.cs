@@ -19,10 +19,5 @@ public class Binary
 
   private static bool ValidInput(char input)
   {
-    if (input == '0' || input == '1')
-    {
-      return true;
-    }
-    return false;
-  }
+    return input == '0' || input == '1';
 }
