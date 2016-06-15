@@ -1,5 +1,5 @@
-﻿using System;
 using System.Collections.Generic;
+
 public class PrimeFactors
 {
   public static List<int> For(long n)
