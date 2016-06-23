@@ -7,7 +7,7 @@ public class Binary
     int output = 0, i = 0;
     for (int len = binary.Length - 1; len >= 0; len--)
     {
-      if (!ValidInput(binary[i]))
+      if (!IsValid(binary[i]))
       {
         return 0;
       }
@@ -17,7 +17,7 @@ public class Binary
     return output;
   }
 
-  private static bool ValidInput(char input)
+  private static bool IsValid(char input)
   {
     return input == '0' || input == '1';
   }
