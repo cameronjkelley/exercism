@@ -9,13 +9,10 @@ public class Acronym
     string output = "";
 
     Regex pattern = new Regex(@"\b[A-Za-z]|[A-Z](?=[a-z])");
-    Match match = pattern.Match(input);
+    MatchCollection matches = pattern.Matches(input);
 
-    while (match.Success)
-    {
+    foreach (Match match in matches)
       output += match.Value;
-      match = match.NextMatch();
-    }
     return output.ToUpper();
   }
 }
