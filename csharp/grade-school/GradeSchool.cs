@@ -24,10 +24,6 @@ public class School
 
   public List<string> Grade(int grade)
   {
-    if (Roster.ContainsKey(grade))
-    {
-      return Roster[grade];
-    }
-    return new List<string>();
+    return Roster.ContainsKey(grade) ? Roster[grade] : new List<string>();
   }
 }
