@@ -15,48 +15,25 @@ public class Palindrome
 
   public static Palindrome Largest(int max)
   {
-    return GetLargestPalindrome(1, max);
+    return Largest(1, max);
   }
 
   public static Palindrome Largest(int min, int max)
   {
-    return GetLargestPalindrome(min, max);
+    return FindPalindrome(min, max, (x, y) => x >= y);
   }
 
   public static Palindrome Smallest(int max)
   {
-    return GetSmallestPalindrome(1, max);
+    return Smallest(1, max);
   }
 
   public static Palindrome Smallest(int min, int max)
   {
-    return GetSmallestPalindrome(min, max);
+    return FindPalindrome(min, max, (x, y) => x < y);
   }
 
-  private static Palindrome GetLargestPalindrome(int min, int max)
-  {
-    int value = 0;
-    List<Tuple<int, int>> factors = new List<Tuple<int, int>>();
-    for (int i = max; i >= min; i--)
-    {
-      for (int j = i; j >= min; j--)
-      {
-        int product = j * i;
-        if (product >= value)
-        {
-          string s = product.ToString();
-          if (s == Reverse(s))
-          {
-            value = product;
-            factors.Add(Tuple.Create(j, i));
-          }
-        }
-      }
-    }
-    return new Palindrome(value, factors.Select(x => x).Where(y => y.Item1 * y.Item2 == value).ToArray());
-  }
-
-  private static Palindrome GetSmallestPalindrome(int min, int max)
+  private static Palindrome FindPalindrome(int min, int max, Func<int, int, bool> compare)
   {
     int value = 0;
     List<Tuple<int, int>> factors = new List<Tuple<int, int>>();
@@ -65,25 +42,25 @@ public class Palindrome
       for (int j = i; j <= max; j++)
       {
         int product = j * i;
-        if (value == 0)
+        if (IsPalindrome(product) && (compare(product, value) || value == 0))
         {
-          string s = product.ToString();
-          if (s == Reverse(s))
-          {
-            value = product;
-            factors.Add(Tuple.Create(j, i));
-            break;
-          }
+          value = product;
+          factors.Add(Tuple.Create(i, j));
         }
       }
     }
-    return new Palindrome(value, factors.ToArray());
+    return new Palindrome(value, factors.Select(x => x).Where(y => y.Item1 * y.Item2 == value).ToArray());
   }
 
-  private static string Reverse(string x)
+  private static bool IsPalindrome(int num)
   {
-    char[] chars = x.ToCharArray();
-    Array.Reverse(chars);
-    return new string(chars);
+    int temp = num;
+    int rem = 0;
+    while (num > 0)
+    {
+      rem = rem * 10 + num % 10;
+      num /= 10;
+    }
+    return temp == rem;
   }
 }
