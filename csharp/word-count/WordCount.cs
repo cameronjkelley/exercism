@@ -6,9 +6,8 @@ public class Phrase
   public static Dictionary<string, int> WordCount(string input)
   {
     Dictionary<string, int> output = new Dictionary<string, int>();
-    Match match = Regex.Match(input, @"\w+'\w+|\w+");
-
-    while (match.Success)
+    MatchCollection matches = Regex.Matches(input, @"\w+'\w+|\w+");
+    foreach (Match match in matches)
     {
       string word = match.Value.ToLower();
       if (!output.ContainsKey(word))
@@ -16,7 +15,6 @@ public class Phrase
         output.Add(word, 0);
       }
       output[word]++;
-      match = match.NextMatch();
     }
     return output;
   }
