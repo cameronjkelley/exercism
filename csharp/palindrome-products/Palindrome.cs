@@ -49,7 +49,7 @@ public class Palindrome
         }
       }
     }
-    return new Palindrome(value, factors.Select(x => x).Where(y => y.Item1 * y.Item2 == value).ToArray());
+    return new Palindrome(value, factors.Where(x => x.Item1 * x.Item2 == value).ToArray());
   }
 
   private static bool IsPalindrome(int num)
