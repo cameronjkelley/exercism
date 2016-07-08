@@ -4,19 +4,10 @@ public class Bob
 {
   public static string Hey(string input)
   {
-    if (Silent(input))
-    {
-      return "Fine. Be that way!";
-    }
-    if (Yelling(input))
-    {
-      return "Whoa, chill out!";
-    }
-    if (Asking(input))
-    {
-      return "Sure.";
-    }
-    return "Whatever.";
+    if (Silent(input)) return "Fine. Be that way!";
+    else if (Yelling(input)) return "Whoa, chill out!";
+    else if (Asking(input)) return "Sure.";
+    else return "Whatever.";
   }
 
   public static bool Silent(string input)
