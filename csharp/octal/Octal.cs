@@ -19,7 +19,6 @@ public class Octal
 
   private static bool IsValid(string number)
   {
-    Regex pattern = new Regex(@"^[0-7]+$");
-    return pattern.IsMatch(number);
+    return Regex.IsMatch(number, "^[0-7]+$");
   }
 }
