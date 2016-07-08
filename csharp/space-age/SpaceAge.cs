@@ -1,11 +1,5 @@
-﻿using System.Collections.Generic;
-
 public class SpaceAge
 {
-  private enum Planet
-  {
-    Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-  }
   public decimal Seconds { get; private set; }
 
   public SpaceAge(decimal seconds)
@@ -13,61 +7,43 @@ public class SpaceAge
     Seconds = seconds;
   }
 
-  private Dictionary<Planet, decimal> PlanetaryPeriods = new Dictionary<Planet, decimal>
+  public decimal OnEarth()
   {
-    { Planet.Mercury, 0.2408467m },
-    { Planet.Venus, 0.61519726m },
-    { Planet.Earth, 1 },
-    { Planet.Mars, 1.8808158m },
-    { Planet.Jupiter, 11.862615m },
-    { Planet.Saturn, 29.447498m },
-    { Planet.Uranus, 84.016846m },
-    { Planet.Neptune, 164.79132m }
-  };
+    return Seconds / 31557600;
+  }
 
   public decimal OnMercury()
   {
-    return OnPlanetX(PlanetaryPeriods[Planet.Mercury]);
+    return OnEarth() / 0.2408467m;
   }
 
   public decimal OnVenus()
   {
-    return OnPlanetX(PlanetaryPeriods[Planet.Venus]);
-  }
-
-  public decimal OnEarth()
-  {
-    return OnPlanetX(PlanetaryPeriods[Planet.Earth]);
+    return OnEarth() / 0.61519726m;
   }
 
   public decimal OnMars()
   {
-    return OnPlanetX(PlanetaryPeriods[Planet.Mars]);
+    return OnEarth() / 1.8808158m;
   }
 
   public decimal OnJupiter()
   {
-    return OnPlanetX(PlanetaryPeriods[Planet.Jupiter]);
+    return OnEarth() / 11.862615m;
   }
 
   public decimal OnSaturn()
   {
-    return OnPlanetX(PlanetaryPeriods[Planet.Saturn]);
+    return OnEarth() / 29.447498m;
   }
 
   public decimal OnUranus()
   {
-    return OnPlanetX(PlanetaryPeriods[Planet.Uranus]);
+    return OnEarth() / 84.016846m;
   }
 
   public decimal OnNeptune()
   {
-    return OnPlanetX(PlanetaryPeriods[Planet.Neptune]);
-  }
-
-  private decimal OnPlanetX(decimal period)
-  {
-    decimal earthPeriod = 31557600;
-    return (Seconds / earthPeriod) / period;
+    return OnEarth() / 164.79132m;
   }
 }
