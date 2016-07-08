@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -10,15 +10,10 @@ public class WordProblem
 
   public static int Solve(string problem)
   {
-    string[] pieces = problem.Split(new char[] { ' ', '?' }, StringSplitOptions.RemoveEmptyEntries);
-
-    GetOperands(pieces);
-    GetOperators(pieces);
+    GetComponents(problem);
 
     if (Operators.Count == 0 || Operators.Count >= Operands.Count)
-    {
       throw new ArgumentException();
-    }
 
     int i = 0;
     do
@@ -30,29 +25,17 @@ public class WordProblem
     return Operands.Last();
   }
 
-  private static void GetOperands(string[] pieces)
+  private static void GetComponents(string input)
   {
-    foreach (string piece in pieces)
+    Regex pattern = new Regex(@"plus|minus|multiplied|divided|\d");
+    MatchCollection matches = pattern.Matches(input);
+    foreach (Match match in matches)
     {
       int num;
-      if (Int32.TryParse(piece, out num))
-      {
+      if (Int32.TryParse(match.ToString(), out num))
         Operands.Add(num);
-      }
-    }
-  }
-
-  private static void GetOperators(string[] pieces)
-  {
-    Regex pattern = new Regex(@"plus|minus|multiplied|divided");
-    foreach (string piece in pieces)
-    {
-      Match match = pattern.Match(piece);
-      if (match.Success)
-      {
-        Operators.Add(match.Value);
-
-      }
+      else
+        Operators.Add(match.ToString());
     }
   }
 
