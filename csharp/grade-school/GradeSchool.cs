@@ -12,13 +12,9 @@ public class School
   public void Add(string student, int grade)
   {
     if (Roster.ContainsKey(grade))
-    {
       Roster[grade].Add(student);
-    }
     else
-    { 
       Roster[grade] = new List<string>() { student };
-    }
     Roster[grade].Sort();
   }
 
