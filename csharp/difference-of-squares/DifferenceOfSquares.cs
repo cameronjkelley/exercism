@@ -8,10 +8,8 @@ public class Squares
 
   public Squares(int value)
   {
-    if (value < 0)
-    {
-      throw new ArgumentException("Input must be greater than or equal to 0.");
-    }
+    if (value < 0) throw new ArgumentException("Input must be greater than or equal to 0.");
+    
     squares = value;
     range = Enumerable.Range(1, value).ToArray();
   }
