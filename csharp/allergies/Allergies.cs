@@ -31,10 +31,7 @@ public class Allergies
     List<string> allergies = new List<string>();
     foreach (var pair in AllergenScores)
     {
-      if (isAllergic(pair.Value))
-      {
-        allergies.Add(pair.Key);
-      }
+      if (isAllergic(pair.Value)) allergies.Add(pair.Key);
     }
     return allergies;
   }
