@@ -16,10 +16,6 @@ public class Scrabble
 
   public static int Score(string input)
   {
-    if (string.IsNullOrWhiteSpace(input))
-    {
-      return 0;
-    }
-    return input.ToLower().Sum(x => LetterValues[x]);
+    return string.IsNullOrWhiteSpace(input) ? 0 : input.ToLower().Sum(x => LetterValues[x]);
   }
 }
