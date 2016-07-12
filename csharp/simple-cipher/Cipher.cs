@@ -16,8 +16,7 @@ public class Cipher
 
   public Cipher(string key)
   {
-    if (InvalidKey(key))
-      throw new ArgumentException();
+    if (InvalidKey(key)) throw new ArgumentException();
     Key = key;
   }
 
@@ -37,12 +36,10 @@ public class Cipher
     for (int i = 0; i < message.Length; i++)
     {
       int newIndex = createIndex(alphabet.IndexOf(message[i]), alphabet.IndexOf(Key[i]));
-      if (newIndex >= 26)
-        code += alphabet[newIndex - 26];
-      else if (newIndex < 0)
-        code += alphabet[newIndex + 26];
-      else
-        code += alphabet[newIndex];
+      
+      if (newIndex >= 26) code += alphabet[newIndex - 26];
+      else if (newIndex < 0) code += alphabet[newIndex + 26];
+      else code += alphabet[newIndex];
     }
     return code;
   }
