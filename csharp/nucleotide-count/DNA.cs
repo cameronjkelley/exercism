@@ -1,34 +1,34 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 public class DNA
 {
-  public DNA(string input)
-  {
-    SetNucleotideCounts(input);
-  }
+	public Dictionary<char, int> NucleotideCounts { get; private set; }
 
-  public Dictionary<char, int> NucleotideCounts { get; set; }
+	public DNA(string input)
+	{
+		SetNucleotideCounts(input);
+	}
 
-  private void SetNucleotideCounts(string strand)
-  {
-    NucleotideCounts = new Dictionary<char, int> { { 'A', 0 }, { 'T', 0 }, { 'C', 0 }, { 'G', 0 } };
+	public int Count(char input)
+	{
+		int count;
+		if (!NucleotideCounts.TryGetValue(input, out count))
+		{
+			throw new InvalidNucleotideException();
+		}
+		return count;
+	}
 
-    foreach(var x in strand)
-    {
-      NucleotideCounts[x] += 1;
-    }
-  }
+	private void SetNucleotideCounts(string strand)
+	{
+		NucleotideCounts = new Dictionary<char, int> { { 'A', 0 }, { 'T', 0 }, { 'C', 0 }, { 'G', 0 } };
 
-  public int Count(char input)
-  {
-    int count;
-    if (!NucleotideCounts.TryGetValue(input, out count))
-    {
-      throw new InvalidNucleotideException();
-    }
-    return count;
-  }
+		foreach (char x in strand)
+		{
+			NucleotideCounts[x] += 1;
+		}
+	}
 }
 
 public class InvalidNucleotideException : Exception { }
