@@ -3,25 +3,6 @@ using System.Collections.Generic;
 
 public class TwelveDaysSong
 {
-  public string Verse(int verse)
-  {
-    return BuildVerse(verse);
-  }
-  public string Verses(int start, int stop)
-  {
-    string verses = "";
-    for (; start <= stop; start++)
-    {
-      verses += BuildVerse(start) + "\n";
-    }
-    return verses;
-  }
-
-  public string Sing()
-  {
-    return Verses(1, 12);
-  }
-
   private Dictionary<int, Tuple<string, string>> Days = new Dictionary<int, Tuple<string, string>>
   {
     { 1, Tuple.Create("first", "a Partridge in a Pear Tree") },
@@ -37,6 +18,26 @@ public class TwelveDaysSong
     { 11, Tuple.Create("eleventh", "eleven Pipers Piping") },
     { 12, Tuple.Create("twelfth", "twelve Drummers Drumming") }
   };
+  
+  public string Verse(int verse)
+  {
+    return BuildVerse(verse);
+  }
+  
+  public string Verses(int start, int stop)
+  {
+    string verses = "";
+    for (; start <= stop; start++)
+    {
+      verses += BuildVerse(start) + "\n";
+    }
+    return verses;
+  }
+
+  public string Sing()
+  {
+    return Verses(1, 12);
+  }
 
   private string BuildVerse(int number)
   {
