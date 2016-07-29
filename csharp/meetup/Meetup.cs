@@ -1,34 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 
 public enum Schedule
 {
-  Teenth,
-  First,
-  Second,
-  Third,
-  Fourth,
-  Last
+  Teenth, First, Second, Third, Fourth, Last
 }
 
 public class Meetup
 {
-  private int _month;
-  private int _year;
+  private int Month;
+  private int Year;
 
   public Meetup(int month, int year)
   {
-    _month = month;
-    _year = year;
+    Month = month;
+    Year = year;
   }
 
   public DateTime Day(DayOfWeek dow, Schedule preference)
   {
-    if (preference == Schedule.Last)
-    {
-      return GetLastDay(_year, _month, dow);
-    }
-    return GetPreferredDay(_year, _month, dow, preference);
+    if (preference == Schedule.Last) return GetLastDay(Year, Month, dow);
+    return GetPreferredDay(Year, Month, dow, preference);
   }
 
   private DateTime GetLastDay(int year, int month, DayOfWeek day)
@@ -36,10 +27,7 @@ public class Meetup
     for (int i = DateTime.DaysInMonth(year, month); i >= 22; i--)
     {
       DateTime dt = new DateTime(year, month, i);
-      if (dt.DayOfWeek == day)
-      {
-        return dt;
-      }
+      if (dt.DayOfWeek == day) return dt;
     }
     return new DateTime();
   }
@@ -47,25 +35,22 @@ public class Meetup
   private DateTime GetPreferredDay(int year, int month, DayOfWeek day, Schedule preference)
   {
     DateTime date = new DateTime();
-    int idx, limit;
+    int idx, lmt;
     if (preference == Schedule.Teenth)
     {
       idx = 13;
-      limit = 19;
+      lmt = 19;
     }
     else
     {
       idx = ((int)preference - 1) * 7 + 1;
-      limit = (int)preference * 7;
+      lmt = (int)preference * 7;
     }
 
-    for (; idx <= limit; idx++)
+    for (; idx <= lmt; idx++)
     {
       DateTime dt = new DateTime(year, month, idx);
-      if (dt.DayOfWeek == day)
-      {
-        date = dt;
-      }
+      if (dt.DayOfWeek == day) date = dt;
     }
     return date;
   }
