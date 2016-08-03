@@ -1,4 +1,5 @@
-﻿using System.IO;
+// Because "Alaskians" is not a word, I changed those occurences in test to "Alaskans".
+using System.IO;
 using System.Text;
 using NUnit.Framework;
 
