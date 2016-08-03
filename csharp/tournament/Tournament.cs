@@ -53,7 +53,7 @@ public class Tournament
 
 	private static string[] Teams = new string[]
 	{
-			"Allegoric Alaskians", "Blithering Badgers", "Courageous Californians", "Devastating Donkeys"
+			"Allegoric Alaskans", "Blithering Badgers", "Courageous Californians", "Devastating Donkeys"
 	};
 
 	private static string[] Outcomes = new string[]
