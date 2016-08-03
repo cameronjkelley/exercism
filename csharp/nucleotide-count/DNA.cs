@@ -10,23 +10,19 @@ public class DNA
 		SetNucleotideCounts(input);
 	}
 
-	public int Count(char input)
+	public int Count(char c)
 	{
-		int count;
-		if (!NucleotideCounts.TryGetValue(input, out count))
-		{
+		if (!NucleotideCounts.ContainsKey(c))
 			throw new InvalidNucleotideException();
-		}
-		return count;
+		return NucleotideCounts[c];
 	}
 
 	private void SetNucleotideCounts(string strand)
 	{
 		NucleotideCounts = new Dictionary<char, int> { { 'A', 0 }, { 'T', 0 }, { 'C', 0 }, { 'G', 0 } };
-
-		foreach (char x in strand)
+		foreach (char c in strand)
 		{
-			NucleotideCounts[x] += 1;
+			NucleotideCounts[c]++;
 		}
 	}
 }
