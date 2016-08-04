@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -6,7 +6,7 @@ public class Tournament
 {
 	public static void Tally(MemoryStream inStream, MemoryStream outStream)
 	{
-		Dictionary<string, Dictionary<string, int>> tally = EmptyTally();
+		Dictionary<string, Dictionary<string, int>> tally = new Dictionary<string, Dictionary<string, int>>();
 
 		var encoding = new System.Text.UTF8Encoding();
 		using (StreamReader reader = new StreamReader(inStream, encoding))
@@ -14,30 +14,33 @@ public class Tournament
 			while (reader.Peek() >= 0)
 			{
 				string[] line = reader.ReadLine().Trim().Split(';');
-				if (line.Length == 3)
+				if (line.Length == 3 && ValidOutcome(line[2]))
 				{
 					string home = line[0], away = line[1], outcome = line[2];
-					if (ValidTeam(home) && ValidTeam(away) && ValidOutcome(outcome))
+
+					if (!tally.ContainsKey(home))
+						tally.Add(home, new Dictionary<string, int> { { "MP", 0 }, { "W", 0 }, { "D", 0 }, { "L", 0 }, { "P", 0 } });
+					if (!tally.ContainsKey(away))
+						tally.Add(away, new Dictionary<string, int> { { "MP", 0 }, { "W", 0 }, { "D", 0 }, { "L", 0 }, { "P", 0 } });
+
+					switch(outcome)
 					{
-						if (outcome == "win")
-						{
+						case "win":
 							tally[home]["P"] += 3;
 							tally[home]["W"]++;
 							tally[away]["L"]++;
-						}
-						else if (outcome == "loss")
-						{
+							break;
+						case "loss":
 							tally[away]["P"] += 3;
 							tally[away]["W"]++;
 							tally[home]["L"]++;
-						}
-						else
-						{
+							break;
+						case "draw":
 							tally[home]["P"]++;
 							tally[home]["D"]++;
 							tally[away]["P"]++;
 							tally[away]["D"]++;
-						}
+							break;
 					}
 				}
 			}
@@ -51,34 +54,9 @@ public class Tournament
 		writer.Close();
 	}
 
-	private static string[] Teams = new string[]
-	{
-			"Allegoric Alaskans", "Blithering Badgers", "Courageous Californians", "Devastating Donkeys"
-	};
-
-	private static string[] Outcomes = new string[]
-	{
-			"win", "draw", "loss"
-	};
-
-	private static Dictionary<string, Dictionary<string, int>> EmptyTally()
-	{
-		Dictionary<string, Dictionary<string, int>> tally = new Dictionary<string, Dictionary<string, int>>();
-		foreach (string team in Teams)
-		{
-			tally.Add(team, new Dictionary<string, int> { { "MP", 0 }, { "W", 0 }, { "D", 0 }, { "L", 0 }, { "P", 0 } });
-		}
-		return tally;
-	}
-
-	private static bool ValidTeam(string team)
-	{
-		return Teams.Contains(team);
-	}
-
 	private static bool ValidOutcome(string outcome)
 	{
-		return Outcomes.Contains(outcome);
+		return outcome == "win" || outcome == "draw" || outcome == "loss";
 	}
 
 	private static string FormatTally(List<KeyValuePair<string, Dictionary<string, int>>> tally)
