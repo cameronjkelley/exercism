@@ -26,22 +26,21 @@ public class Tournament
 					switch(outcome)
 					{
 						case "win":
-							tally[home]["P"] += 3;
 							tally[home]["W"]++;
 							tally[away]["L"]++;
 							break;
 						case "loss":
-							tally[away]["P"] += 3;
 							tally[away]["W"]++;
 							tally[home]["L"]++;
 							break;
 						case "draw":
-							tally[home]["P"]++;
 							tally[home]["D"]++;
-							tally[away]["P"]++;
 							tally[away]["D"]++;
 							break;
 					}
+
+					tally[home]["P"] = tally[home]["W"] * 3 + tally[home]["D"];
+					tally[away]["P"] = tally[away]["W"] * 3 + tally[away]["D"];
 				}
 			}
 		}
@@ -59,10 +58,10 @@ public class Tournament
 		return outcome == "win" || outcome == "draw" || outcome == "loss";
 	}
 
-	private static string FormatTally(List<KeyValuePair<string, Dictionary<string, int>>> tally)
+	private static string FormatTally(List<KeyValuePair<string, Dictionary<string, int>>> tallyList)
 	{
 		string table = "Team".PadRight(31) + "| MP |  W |  D |  L |  P";
-		foreach (KeyValuePair<string, Dictionary<string, int>> team in tally)
+		foreach (KeyValuePair<string, Dictionary<string, int>> team in tallyList)
 		{
 			team.Value["MP"] = team.Value["W"] + team.Value["D"] + team.Value["L"];
 			table += "\r\n" + $"{team.Key.PadRight(31)}" + $"|  {team.Value["MP"]} |  {team.Value["W"]} |  {team.Value["D"]} |  {team.Value["L"]} |  {team.Value["P"]}";
