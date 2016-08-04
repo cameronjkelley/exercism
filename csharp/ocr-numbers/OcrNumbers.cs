@@ -5,7 +5,7 @@ class OcrNumbers
 {
 	public static string Convert(string input)
 	{
-		string[] inputArray = input.Split(new string[] { "\n" }, StringSplitOptions.None);
+		string[] inputArray = input.Split('\n');
 		string[] outputArray = new string[inputArray[0].Length];
 		for (int i = 0; i < inputArray.Length - 1; i++)
 		{
