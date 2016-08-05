@@ -1,18 +1,15 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
 public class Complement
 {
-  private static Dictionary<string, string> Nucleotides = new Dictionary<string, string>()
+  private static Dictionary<char, char> Nucleotides = new Dictionary<char, char>()
   {
-    { "G", "C" },
-    { "C", "G" },
-    { "T", "A" },
-    { "A", "U" }
+    { 'G', 'C' }, { 'C', 'G' }, { 'T', 'A' }, { 'A', 'U' }
   };
 
-  public static string OfDna(string input)
+  public static IEnumerable<char> OfDna(string dna)
   {
-    return string.Join("", input.Select(x => Nucleotides[x.ToString()]));
+    return dna.Select(x => Nucleotides[x]);
   }
 }
