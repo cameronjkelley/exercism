@@ -19,9 +19,7 @@ public static class Strain
     foreach (T item in source)
     {
       if (predicate(item))
-      {
         result.Add(item);
-      }
     }
     return result;
   }
