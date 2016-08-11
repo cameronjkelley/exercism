@@ -18,8 +18,7 @@ public static class Strain
     List<T> result = new List<T>();
     foreach (T item in source)
     {
-      if (predicate(item))
-        result.Add(item);
+      if (predicate(item)) result.Add(item);
     }
     return result;
   }
