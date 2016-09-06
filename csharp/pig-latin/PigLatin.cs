@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 public class PigLatin
 {
@@ -15,11 +15,11 @@ public class PigLatin
 
     foreach (string word in inputArray)
     {
-      if (vowels.Match(word).Success || special.Match(word).Success)
+      if (vowels.IsMatch(word) || special.IsMatch(word))
         output += word + "ay ";
-      else if (trios.Match(word).Success)
+      else if (trios.IsMatch(word))
         output += word.Substring(3) + word.Substring(0, 3) + "ay ";
-      else if (duos.Match(word).Success)
+      else if (duos.IsMatch(word))
         output += word.Substring(2) + word.Substring(0, 2) + "ay ";
       else
         output += word.Substring(1) + word.Substring(0, 1) + "ay ";
