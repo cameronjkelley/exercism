@@ -24,7 +24,7 @@ public class Anagram
     {
       string lowered = word.ToLower();
 
-      if (SortString(word) == sortedoriginal && !matches.Contains(lowered) && lowered != original)
+      if (SortString(word) == sortedoriginal && lowered != original)
         matches.Add(word);
     }
     return matches.ToArray();
