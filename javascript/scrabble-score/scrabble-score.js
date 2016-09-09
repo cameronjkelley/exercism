@@ -9,13 +9,12 @@ var values = {
 }
 
 var score = function(word) {
-  var sum = 0;
-  if (word !== null) {
-    word.toLowerCase().split("").forEach(function(letter) {
-      if (values[letter] !== undefined) sum += values[letter];
-    });
-  }
-  return sum;
+  if (word === null)
+    return 0;
+  else
+    return word.toLowerCase().split("").reduce(function(sum, letter) {
+      return sum + values[letter];
+    }, 0);
 }
 
 module.exports = score;
