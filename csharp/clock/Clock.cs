@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 public struct Clock
 {
@@ -18,15 +18,15 @@ public struct Clock
 
   public Clock Add(int time)
   {
-    int m = (minutes + time) % 60;
     int h = (minutes + time) / 60;
-    return new Clock(hours + h, m);
+		int m = (minutes + time) % 60;
+		return new Clock(hours + h, m);
   }
 
   public Clock Subtract(int time)
   {
-    int m = (minutes - time + 60) % 60;
     int h = minutes - time < 0 ? (int)Math.Ceiling(time / 60.0) : 0;
-    return new Clock(hours - h, m);
+		int m = (minutes - time + 60) % 60;
+		return new Clock(hours - h, m);
   }
 }
