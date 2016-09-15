@@ -13,7 +13,6 @@ class ScaleGenerator
 		string[] notes = Flats.Contains(key) ? Notes.Where(x => !x.Contains("#")).ToArray() : Notes.Where(x => !x.Contains("b")).ToArray();
 		key = key.Length == 2 ? key[0].ToString().ToUpper() + key[1] : key.ToUpper();
 		int idx = Array.IndexOf(notes, key);
-
 		for (int i = 1; i <= intervals.Length; i++)
 		{
 			if (idx > notes.Length - 1) idx -= notes.Length;
