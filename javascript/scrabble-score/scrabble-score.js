@@ -6,15 +6,10 @@ var values = {
   k: 5,
   j: 8, x: 8,
   q: 10, z: 10
-}
+};
 
-var score = function(word) {
-  if (word === null)
-    return 0;
-  else
-    return word.toLowerCase().split("").reduce(function(sum, letter) {
-      return sum + values[letter];
-    }, 0);
-}
+function score(word) {
+  return word === null ? 0 : word.toLowerCase().split("").reduce(function(sum, letter) { return sum + values[letter]; }, 0);
+};
 
 module.exports = score;
