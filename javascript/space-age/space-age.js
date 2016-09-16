@@ -4,6 +4,7 @@ function parseTime(time) {
 
 function SpaceAge(seconds) {
   this.seconds = seconds;
+  this.earthPeriod = seconds / 31557600;
   this.orbitalPeriods = {
     "Mercury": 0.2408467,
     "Venus": 0.61519726,
@@ -14,28 +15,28 @@ function SpaceAge(seconds) {
     "Neptune":  164.79132
   };
   this.onEarth = function() {
-    return parseTime(this.seconds / 31557600);
+    return parseTime(this.earthPeriod);
   };
   this.onMercury = function() {
-    return parseTime(this.seconds / 31557600 / this.orbitalPeriods["Mercury"]);
+    return parseTime(this.earthPeriod / this.orbitalPeriods["Mercury"]);
   };
   this.onVenus = function() {
-    return parseTime(this.seconds / 31557600 / this.orbitalPeriods["Venus"]);
+    return parseTime(this.earthPeriod / this.orbitalPeriods["Venus"]);
   };
   this.onMars = function() {
-    return parseTime(this.seconds / 31557600 / this.orbitalPeriods["Mars"]);
+    return parseTime(this.earthPeriod / this.orbitalPeriods["Mars"]);
   };
   this.onJupiter = function() {
-    return parseTime(this.seconds / 31557600 / this.orbitalPeriods["Jupiter"]);
+    return parseTime(this.earthPeriod / this.orbitalPeriods["Jupiter"]);
   };
   this.onSaturn = function() {
-    return parseTime(this.seconds / 31557600 / this.orbitalPeriods["Saturn"]);
+    return parseTime(this.earthPeriod / this.orbitalPeriods["Saturn"]);
   };
   this.onUranus = function() {
-    return parseTime(this.seconds / 31557600 / this.orbitalPeriods["Uranus"]);
+    return parseTime(this.earthPeriod / this.orbitalPeriods["Uranus"]);
   };
   this.onNeptune = function() {
-    return parseTime(this.seconds / 31557600 / this.orbitalPeriods["Neptune"]);
+    return parseTime(this.earthPeriod / this.orbitalPeriods["Neptune"]);
   };
 };
 
