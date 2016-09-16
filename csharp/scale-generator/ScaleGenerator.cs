@@ -5,7 +5,7 @@ using System.Linq;
 class ScaleGenerator
 {
 	private static string[] Flats = { "F", "Ab", "Bb", "Db", "Eb", "Gb", "c", "d", "f", "g", "bb", "eb" };
-	private static string[] Notes = { "G#", "Ab", "A", "A#", "Bb", "B", "C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G" };
+	private static string[] Notes = { "Ab", "A", "A#", "Bb", "B", "C", "C#", "Db", "D", "D#", "Eb", "E", "F", "F#", "Gb", "G", "G#" };
 
 	public static IEnumerable<string> Pitches(string key, string intervals)
 	{
