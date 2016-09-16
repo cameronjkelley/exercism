@@ -9,7 +9,7 @@ var values = {
 };
 
 function score(word) {
-  return word === null ? 0 : word.toLowerCase().split("").reduce(function(sum, letter) { return sum + values[letter]; }, 0);
+  return word === null ? 0 : word.toLowerCase().split("").reduce((sum, letter) => sum + values[letter], 0);
 };
 
 module.exports = score;
