@@ -5,14 +5,14 @@ function parseTime(time) {
 function SpaceAge(seconds) {
   this.seconds = seconds;
   this.earthPeriod = seconds / 31557600;
-  this.onEarth = function() {
-    return parseTime(this.earthPeriod);
-  };
   this.onMercury = function() {
     return parseTime(this.earthPeriod / 0.2408467);
   };
   this.onVenus = function() {
     return parseTime(this.earthPeriod / 0.61519726);
+  };
+  this.onEarth = function() {
+    return parseTime(this.earthPeriod);
   };
   this.onMars = function() {
     return parseTime(this.earthPeriod / 1.8808158);
