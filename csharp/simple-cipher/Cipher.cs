@@ -45,7 +45,7 @@ public class Cipher
     string newMessage = "";
     for (int i = 0; i < message.Length; i++)
     {
-      newMessage += letters[(createIndex(letters.IndexOf(message[i]), letters.IndexOf(Key[i])) % 26)];
+      newMessage += letters[Math.Abs(createIndex(letters.IndexOf(message[i]), letters.IndexOf(Key[i]))) % 26];
     }
     return newMessage;
   }
