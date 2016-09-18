@@ -1,10 +1,8 @@
-function Isogram(input) {
-  this.input = input.replace(/\W/g, "").toLowerCase();
+function Isogram(word) {
+  this.word = word.replace(/\W/g, "").toLowerCase().split("");
   this.isIsogram = function() {
-      var output = this.input.split("").filter(function(elem, idx, self) {
-        return self.indexOf(elem) === idx;
-      });
-      return output.length === this.input.length;
+    var chars = this.word.filter((elem, idx, self) => self.indexOf(elem) === idx);
+    return chars.length === this.word.length;
   };
 };
 
