@@ -1,5 +1,5 @@
-var DNA_COMPLEMENTS = { U: "A", C: "G", G: "C", A: "T"},
-    RNA_COMPLEMENTS = { A: "U", C: "G", G: "C", T: "A" };
+var RNA_COMPLEMENTS = { A: "U", C: "G", G: "C", T: "A" },
+		DNA_COMPLEMENTS = { U: "A", C: "G", G: "C", A: "T"};
 
 function transcribe(strand, complement) {
 	return strand.split("").map(e => complement[e]).join("");
