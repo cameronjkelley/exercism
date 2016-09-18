@@ -1,9 +1,7 @@
 function Pangram(input) {
-  this.input = input.replace(/\W|\d|_/g, "").toLowerCase().split("");
+  var chars = input.toLowerCase().replace(/\W|\d|_/g, "").split("");
   this.isPangram = function() {
-    var output = [];
-    this.input.forEach((char) => if (output.indexOf(char) === -1) output.push(char));
-    return output.length === 26;
+    return chars.filter((e, i, self) => self.indexOf(e) === i).length === 26;
   };
 };
 
