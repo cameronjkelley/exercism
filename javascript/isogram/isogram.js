@@ -1,8 +1,7 @@
 function Isogram(word) {
-  this.word = word.replace(/\W/g, "").toLowerCase().split("");
+  var chars = word.toLowerCase().replace(/\s|-/g, "").split("");
   this.isIsogram = function() {
-    var chars = this.word.filter((elem, idx, self) => self.indexOf(elem) === idx);
-    return chars.length === this.word.length;
+    return chars.filter((e, _i, self) => self.indexOf(e) === self.lastIndexOf(e)).length === chars.length;
   };
 };
 
