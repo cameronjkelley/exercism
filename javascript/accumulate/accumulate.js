@@ -1,5 +1,7 @@
 function accumulate(collection, predicate) {
-  return collection.map(x => predicate(x));
+  var result = [];
+  collection.forEach((element) => result.push(predicate(element)));
+  return result;
 };
 
 module.exports = accumulate;
