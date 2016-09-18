@@ -1,27 +1,17 @@
 var DNA_COMPLEMENTS = { "U": "A", "C": "G", "G": "C", "A": "T"},
-  	RNA_COMPLEMENTS = { "A": "U", "C": "G", "G": "C", "T": "A" },
-	DnaTranscriber = function() {};
+  	RNA_COMPLEMENTS = { "A": "U", "C": "G", "G": "C", "T": "A" };
 
-DnaTranscriber.prototype.toRna = function(dna) {
-	return transcribe(dna, RNA_COMPLEMENTS);
+function transcribe(strand, complement) {
+  return strand.split("").map(e => complement[e]).join("");
 };
 
-DnaTranscriber.prototype.toDna = function(rna) {
-	return transcribe(rna, DNA_COMPLEMENTS);
-};
-
-function transcribe(strand, complement) {	
-	var bases = strand.split(""),
-		result = "";
-
-	for(var i = 0; i < bases.length; i++) {
-		for(var key in complement) {
-			if(bases[i] == key) {
-				result += complement[key];
-			}
-		}
-	}
-	return result;
+function DnaTranscriber() {
+  this.toRna = function(dna) {
+  	return transcribe(dna, RNA_COMPLEMENTS);
+  };
+  this.toDna = function(rna) {
+  	return transcribe(rna, DNA_COMPLEMENTS);
+  };
 };
 
 module.exports = DnaTranscriber;
