@@ -8,6 +8,11 @@ function newKey() {
   return key;
 };
 
+function isValid(key) {
+  if (/[^a-z]/g.test(key) || key.length === 0) throw new Error("Bad key");
+  return key;
+};
+
 function translate(text, key, createIdx) {
   var code = "";
   for (var i = 0; i < text.length; i++) {
@@ -17,11 +22,6 @@ function translate(text, key, createIdx) {
     else code += letters[newIdx];
   }
   return code;
-};
-
-function isValid(key) {
-  if (/[^a-z]/g.test(key) || key.length === 0) throw new Error("Bad key");
-  return key;
 };
 
 function Cipher(key) {
