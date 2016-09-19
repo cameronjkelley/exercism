@@ -10,13 +10,13 @@ function newKey() {
 
 function translate(text, key, createIdx) {
   var code = "";
-	for (var i = 0; i < text.length; i++) {
-		var newIndex = createIdx(letters.indexOf(text[i]), letters.indexOf(key[i]));
-		if (newIndex >= 26) code += letters[newIndex - 26];
-		else if (newIndex < 0) code += letters[newIndex + 26];
-		else code += letters[newIndex];
-	}
-return code;
+  for (var i = 0; i < text.length; i++) {
+    var newIdx = createIdx(letters.indexOf(text[i]), letters.indexOf(key[i]));
+    if (newIdx > 25) code += letters[newIdx - 26];
+    else if (newIdx < 0) code += letters[newIdx + 26];
+    else code += letters[newIdx];
+  }
+  return code;
 };
 
 function isValid(key) {
