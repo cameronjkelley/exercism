@@ -1,27 +1,26 @@
-﻿using System;
+using System;
 
 class BankAccount
 {
-	private enum Status { Open, Closed };
-	private Status Account;
+	private bool Account;
 	private int Balance;
 	public void Open()
 	{
-		Account = Status.Open;
+		Account = true;
 		Balance = 0;
 	}
 	public int GetBalance()
 	{
-		if (Account == Status.Open) return Balance;
+		if (Account) return Balance;
 		else throw new InvalidOperationException();
 	}
 	public void UpdateBalance(int amount)
 	{
-		if (Account == Status.Open) Balance += amount;
+		if (Account) Balance += amount;
 		else throw new InvalidOperationException();
 	}
 	public void Close()
 	{
-		Account = Status.Closed;
+		Account = false;
 	}
 }
