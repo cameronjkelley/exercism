@@ -12,10 +12,11 @@ function translate(text, key, createIdx) {
   var code = "";
 	for (var i = 0; i < text.length; i++) {
 		var newIndex = createIdx(letters.indexOf(text[i]), letters.indexOf(key[i]));
-		if (newIndex > 25 || newIndex < 0) code += letters[Math.abs(newIndex % 26)];
+		if (newIndex >= 26) code += letters[newIndex - 26];
+		else if (newIndex < 0) code += letters[newIndex + 26];
 		else code += letters[newIndex];
 	}
-	return code;
+return code;
 };
 
 function isValid(key) {
