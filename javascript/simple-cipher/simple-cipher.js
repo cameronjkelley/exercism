@@ -3,17 +3,19 @@ var letters = "abcdefghijklmnopqrstuvwxyz";
 function newKey() {
   var key = "";
   while (key.length < 101) {
-    key += letters[Math.floor(Math.random() * letters.length)];
+    key += letters[Math.floor(Math.random() * 26)];
   }
   return key;
 };
 
 function translate(text, key, createIdx) {
-  var message = "";
-  for (var i = 0; i < text.length; i++) {
-    message += letters[Math.abs(createIdx(letters.indexOf(text[i]), letters.indexOf(key[i]))) % letters.length];
-  };
-  return message;
+  var code = "";
+	for (var i = 0; i < text.length; i++) {
+		var newIndex = createIdx(letters.indexOf(text[i]), letters.indexOf(key[i]));
+		if (newIndex >= 26 || newIndex < 0)	code += letters[newIndex % 26];
+		else code += letters[newIndex];
+	}
+	return code;
 };
 
 function isValid(key) {
