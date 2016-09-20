@@ -19,7 +19,9 @@ public class Queens
 	{
 		White = white;
 		Black = black;
-		if (White.Rank == Black.Rank && White.File == Black.File) throw new ArgumentException();
+		
+		if (White.Rank == Black.Rank && White.File == Black.File) 
+			throw new ArgumentException();
 	}
 	public bool CanAttack()
 	{
