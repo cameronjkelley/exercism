@@ -13,8 +13,7 @@ function Crypto(text) {
     var output = "";
     for (var i = 0; i < text[0].length; i++) {
       for (var j = 0; j < text.length; j++) {
-        if (i < text[j].length)
-          output += text[j][i];
+        if (i < text[j].length) output += text[j][i];
       }
     }
     return output;
