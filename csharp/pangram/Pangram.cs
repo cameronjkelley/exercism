@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 
-
 class Pangram
 {
 	public static bool IsPangram(string phrase)
