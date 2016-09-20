@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 public class Phrase
@@ -10,10 +10,7 @@ public class Phrase
     foreach (Match match in matches)
     {
       string word = match.Value.ToLower();
-      if (!output.ContainsKey(word))
-      {
-        output.Add(word, 0);
-      }
+      if (!output.ContainsKey(word)) output.Add(word, 0);
       output[word]++;
     }
     return output;
