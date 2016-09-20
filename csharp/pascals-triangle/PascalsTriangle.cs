@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 public class PascalsTriangle
 {
@@ -12,10 +12,7 @@ public class PascalsTriangle
       row.Add(1);
       for (int j = 1; j < i; j++)
       {
-        if (i > 1)
-        {
-          row.Add(rows[i - 1][j - 1] + rows[i - 1][j]);
-        }
+        if (i > 1) row.Add(rows[i - 1][j - 1] + rows[i - 1][j]);
       }
       row.Add(1);
       rows.Add(row);
