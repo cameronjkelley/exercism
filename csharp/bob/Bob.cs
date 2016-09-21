@@ -17,7 +17,7 @@ public class Bob
 
   public static bool Yelling(string input)
   {
-    return input.ToUpper() == input && Regex.IsMatch(input, "[a-zA-Z]+");
+    return input.ToUpper() == input && Regex.IsMatch(input, "[A-Z]");
   }
 
   public static bool Asking(string input)
