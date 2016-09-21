@@ -47,11 +47,7 @@ public class Luhn
   {
     number *= 10;
     Luhn luhn = new Luhn(number);
-    if (luhn.Valid)
-    {
-      return number;
-    }
-    return number + (10 - (luhn.Checksum % 10));
+    return luhn.Valid ? number : number + (10 - (luhn.Checksum % 10));
   }
 
   private int[] Doubled(int[] input)
