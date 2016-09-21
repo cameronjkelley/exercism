@@ -11,11 +11,6 @@ public struct Clock
     this.minutes = (minutes + 60) % 60;
   }
 
-  public override string ToString()
-  {
-    return $"{hours:00}:{minutes:00}";
-  }
-
   public Clock Add(int time)
   {
     int h = (minutes + time) / 60;
@@ -28,5 +23,10 @@ public struct Clock
     int h = minutes - time < 0 ? (int)Math.Ceiling(time / 60.0) : 0;
     int m = (minutes - time + 60) % 60;
     return new Clock(hours - h, m);
+  }
+
+  public override string ToString()
+  {
+    return $"{hours:00}:{minutes:00}";
   }
 }
