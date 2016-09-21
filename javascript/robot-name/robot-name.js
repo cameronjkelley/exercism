@@ -1,17 +1,21 @@
 function getRandom(max) {
-  return Math.floor(Math.random() * max);
+  return parseInt(Math.random() * max);
 };
+
+var bots = {};
+
 function createName() {
-  var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-      model = alphabet[getRandom(26)] + alphabet[getRandom(26)],
-      serial = Math.random().toString().substring(2, 5);
-  return model + serial;
+  var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      name = letters[getRandom(26)] + letters[getRandom(26)]
+             + Math.random().toString().substr(-3);
+  if (bots[name]) return createName();
+  else bots[name] = true;
+  return name;
 };
-function Robot() {
+
+module.exports = function() {
   this.name = createName();
   this.reset = function() {
     this.name = createName();
   };
 };
-
-module.exports = Robot;
