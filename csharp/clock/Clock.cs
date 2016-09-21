@@ -26,7 +26,7 @@ public struct Clock
   public Clock Subtract(int time)
   {
     int h = minutes - time < 0 ? (int)Math.Ceiling(time / 60.0) : 0;
-		int m = (minutes - time + 60) % 60;
-		return new Clock(hours - h, m);
+    int m = (minutes - time + 60) % 60;
+    return new Clock(hours - h, m);
   }
 }
