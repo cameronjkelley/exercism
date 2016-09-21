@@ -26,9 +26,7 @@ function Luhn(num) {
 Luhn.create = function(num) {
   num *= 10;
   var luhn = new Luhn(num);
-  if (luhn.valid)
-    return num;
-  return num + (10 - (luhn.checksum % 10))
+  return luhn.valid ? num : num + (10 - (luhn.checksum % 10));
 };
 
 module.exports = Luhn;
