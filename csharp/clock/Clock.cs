@@ -19,8 +19,8 @@ public struct Clock
   public Clock Add(int time)
   {
     int h = (minutes + time) / 60;
-		int m = (minutes + time) % 60;
-		return new Clock(hours + h, m);
+    int m = (minutes + time) % 60;
+    return new Clock(hours + h, m);
   }
 
   public Clock Subtract(int time)
