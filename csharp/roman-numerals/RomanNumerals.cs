@@ -26,7 +26,7 @@ public static class RomanNumerals
     {
       while (input / pair.Key > 0)
       {
-        output += Numerals[pair.Key];
+        output += pair.Value;
         input -= pair.Key;
       }
     }
