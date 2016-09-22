@@ -1,7 +1,7 @@
 ﻿class HelloWorld
 {
-	public static string Hello(string input = "world")
+	public static string Hello(string input)
 	{
-		return $"Hello, {input}!";
+		return input == null ? "Hello, World!" : $"Hello, {input}!";
 	}
 }
