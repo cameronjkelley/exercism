@@ -1,13 +1,14 @@
+var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    bots = {};
+
 function getRandom(max) {
   return parseInt(Math.random() * max);
 };
 
-var bots = {};
-
 function createName() {
-  var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-      name = letters[getRandom(26)] + letters[getRandom(26)]
+  var name = letters[getRandom(26)] + letters[getRandom(26)]
              + Math.random().toString().substr(-3);
+
   if (bots[name]) return createName();
   else bots[name] = true;
   return name;
