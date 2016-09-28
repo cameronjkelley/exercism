@@ -8,7 +8,7 @@ class BankAccount
 
 	public void Open()
 	{
-			Account = true;
+		Account = true;
 	}
 	public int GetBalance()
 	{
@@ -28,6 +28,6 @@ class BankAccount
 	}
 	public void Close()
 	{
-			Account = false;
+		Account = false;
 	}
 }
