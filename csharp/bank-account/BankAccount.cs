@@ -5,13 +5,10 @@ class BankAccount
 	private bool Account = false;
 	private int Balance = 0;
 	private Object Lock = new object();
-	
+
 	public void Open()
 	{
-		lock(Lock)
-		{
 			Account = true;
-		}
 	}
 	public int GetBalance()
 	{
@@ -31,9 +28,6 @@ class BankAccount
 	}
 	public void Close()
 	{
-		lock(Lock)
-		{
 			Account = false;
-		}
 	}
 }
