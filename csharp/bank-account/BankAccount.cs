@@ -5,6 +5,7 @@ class BankAccount
 	private bool Account = false;
 	private int Balance = 0;
 	private Object Lock = new object();
+	
 	public void Open()
 	{
 		lock(Lock)
