@@ -2,25 +2,37 @@ using System;
 
 class BankAccount
 {
-	private bool Account;
-	private int Balance;
+	private bool Account = false;
+	private int Balance = 0;
+	private Object Lock = new object();
 	public void Open()
 	{
-		Account = true;
-		Balance = 0;
+		lock(Lock)
+		{
+			Account = true;
+		}
 	}
 	public int GetBalance()
 	{
-		if (Account) return Balance;
-		else throw new InvalidOperationException();
+		lock(Lock)
+		{
+			if (Account) return Balance;
+			else throw new InvalidOperationException();
+		}
 	}
 	public void UpdateBalance(int amount)
 	{
-		if (Account) Balance += amount;
-		else throw new InvalidOperationException();
+		lock(Lock)
+		{
+			if (Account) Balance += amount;
+			else throw new InvalidOperationException();
+		}
 	}
 	public void Close()
 	{
-		Account = false;
+		lock(Lock)
+		{
+			Account = false;
+		}
 	}
 }
