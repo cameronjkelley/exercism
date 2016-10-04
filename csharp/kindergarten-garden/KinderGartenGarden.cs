@@ -1,30 +1,21 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 public enum Plant
 {
-  Clover,
-  Grass,
-  Radishes,
-  Violets
+  Clover, Grass, Radishes, Violets
 }
 
 public class Garden
 {
   private static string[] Students = new string[]
   {
-    "Alice", "Bob", "Charlie",
-    "David", "Eve", "Fred",
-    "Ginny", "Harriet", "Ileana",
-    "Joseph", "Kincaid", "Larry"
+    "Alice", "Bob", "Charlie", "David", "Eve", "Fred", "Ginny", "Harriet", "Ileana", "Joseph", "Kincaid", "Larry"
   };
 
   private static Dictionary<char, Plant> Plants = new Dictionary<char, Plant>
   {
-    { 'C', Plant.Clover },
-    { 'G', Plant.Grass },
-    { 'R', Plant.Radishes },
-    { 'V', Plant.Violets }
+    { 'C', Plant.Clover }, { 'G', Plant.Grass }, { 'R', Plant.Radishes }, { 'V', Plant.Violets }
   };
 
   private static Dictionary<string, Plant[]> garden = new Dictionary<string, Plant[]>();
