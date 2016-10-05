@@ -11,16 +11,12 @@ function doubleThis(array) {
   return output.reverse();
 };
 
-function isValid(num) {
-  return num % 10 === 0;
-};
-
 function Luhn(num) {
   num = num.toString().split("").map(x => parseInt(x)).reverse();
   this.checkDigit = num[0];
   this.addends = doubleThis(num);
   this.checksum = this.addends.reduce((p, c) => p + c);
-  this.valid = isValid(this.checksum);
+  this.valid = this.checksum % 10 === 0;
 };
 
 Luhn.create = function(num) {
