@@ -26,12 +26,8 @@ function translate(text, key, createIdx) {
 
 function Cipher(key) {
   this.key = arguments.length === 0 ? newKey() : isValid(key);
-  this.encode = function(text) {
-    return translate(text, this.key, (x, y) => x + y);
-  };
-  this.decode = function(text) {
-    return translate(text, this.key, (x, y) => x - y);
-  };
+  this.encode = text => translate(text, this.key, (x, y) => x + y);
+  this.decode = text => translate(text, this.key, (x, y) => x - y);
 };
 
 module.exports = Cipher;
