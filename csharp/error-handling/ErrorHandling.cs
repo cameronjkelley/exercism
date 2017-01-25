@@ -6,7 +6,6 @@ class ErrorHandling : Exception
   {
     throw new Exception();
   }
-
   public static int? HandleErrorByReturningNullableType(string input)
   {
     try
