@@ -28,7 +28,7 @@ public class Queens
 	
 	public bool CanAttack()
 	{
-		return White.Rank == Black.Rank ||  White.File == Black.File || 
+		return White.Rank == Black.Rank || White.File == Black.File || 
 		Math.Abs(White.Rank - Black.Rank) == Math.Abs(White.File - Black.File);
 	}
 }
