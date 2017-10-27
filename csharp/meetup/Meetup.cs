@@ -18,7 +18,11 @@ public class Meetup
 
   public DateTime Day(DayOfWeek dow, Schedule preference)
   {
-    if (preference == Schedule.Last) return GetLastDay(Year, Month, dow);
+    if (preference == Schedule.Last) 
+    {
+      return GetLastDay(Year, Month, dow);
+    }
+    
     return GetPreferredDay(Year, Month, dow, preference);
   }
 
@@ -27,8 +31,12 @@ public class Meetup
     for (int i = DateTime.DaysInMonth(year, month); i >= 22; i--)
     {
       DateTime dt = new DateTime(year, month, i);
-      if (dt.DayOfWeek == day) return dt;
+      if (dt.DayOfWeek == day) 
+      {  
+        return dt;
+      }
     }
+    
     return new DateTime();
   }
 
@@ -50,8 +58,12 @@ public class Meetup
     for (; idx <= lmt; idx++)
     {
       DateTime dt = new DateTime(year, month, idx);
-      if (dt.DayOfWeek == day) date = dt;
+      if (dt.DayOfWeek == day) 
+      {  
+        date = dt;
+      }
     }
+    
     return date;
   }
 }
