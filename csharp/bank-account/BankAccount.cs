@@ -12,15 +12,27 @@ class BankAccount
 	}
 	public int GetBalance()
 	{
-		if (Account) return Balance;
-		else throw new InvalidOperationException();
+		if (Account)
+		{
+			return Balance;
+		}
+		else
+		{
+			throw new InvalidOperationException();
+		}
 	}
 	public void UpdateBalance(int amount)
 	{
 		lock(Lock)
 		{
-			if (Account) Balance += amount;
-			else throw new InvalidOperationException();
+			if (Account) 
+			{
+				Balance += amount;
+			}
+			else 
+			{
+				throw new InvalidOperationException();
+			}
 		}
 	}
 	public void Close()
