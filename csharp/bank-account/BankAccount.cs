@@ -10,6 +10,7 @@ class BankAccount
 	{
 		Account = true;
 	}
+	
 	public int GetBalance()
 	{
 		if (Account)
@@ -21,6 +22,7 @@ class BankAccount
 			throw new InvalidOperationException();
 		}
 	}
+	
 	public void UpdateBalance(int amount)
 	{
 		lock(Lock)
@@ -35,6 +37,7 @@ class BankAccount
 			}
 		}
 	}
+	
 	public void Close()
 	{
 		Account = false;
