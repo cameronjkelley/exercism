@@ -28,19 +28,19 @@ public class Cipher
   public string Decode(string encodedText)
   {
     return Translate(encodedText, (x, y) => x - y);
-	}
+  }
 
-	private string ProduceKey()
-	{
-		return new string(Enumerable.Repeat(alphabet, 100).Select(s => s[random.Next(s.Length)]).ToArray());
-	}
+  private string ProduceKey()
+  {
+    return new string(Enumerable.Repeat(alphabet, 100).Select(s => s[random.Next(s.Length)]).ToArray());
+  }
 	
-	private static bool InvalidKey(string key)
-	{
-		return key == "" || Regex.IsMatch(key, "[^a-z]");
-	}
+  private static bool InvalidKey(string key)
+  {
+    return key == "" || Regex.IsMatch(key, "[^a-z]");
+  }
 	
-	private string Translate(string message, Func<int, int, int> createIndex)
+  private string Translate(string message, Func<int, int, int> createIndex)
   {
     string newMessage = "";
     for (int i = 0; i < message.Length; i++)
