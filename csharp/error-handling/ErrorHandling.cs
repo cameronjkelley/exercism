@@ -6,6 +6,7 @@ class ErrorHandling : Exception
   {
     throw new Exception();
   }
+  
   public static int? HandleErrorByReturningNullableType(string input)
   {
     try
@@ -17,10 +18,12 @@ class ErrorHandling : Exception
       return null;
     }
   }
+  
   public static bool HandleErrorWithOutParam(string x, out int output)
   {
     return int.TryParse(x, out output);
   }
+  
   public static void DisposableResourcesAreDisposedWhenExceptionIsThrown(IDisposable input)
   {
     using (input)
