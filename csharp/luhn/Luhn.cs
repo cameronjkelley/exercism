@@ -24,7 +24,6 @@ public class Luhn
     {
       return Doubled(numbers);
     }
-    
   }
 
   public int Checksum
