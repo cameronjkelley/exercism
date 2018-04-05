@@ -6,7 +6,7 @@ function Matrix (input) {
 	this.columns = 
 		this.rows[0]
 			.map((col, i) => this.rows
-				.map((row) => row[i]));
+				.map(row => row[i]));
 };
 
 module.exports = Matrix;
