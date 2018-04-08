@@ -2,25 +2,34 @@ var letters = "abcdefghijklmnopqrstuvwxyz";
 
 function newKey() {
   var key = "";
-  while (key.length < 101) {
+  
+  while (key.length < 101)
     key += letters[Math.floor(Math.random() * 26)];
-  }
+  
   return key;
 };
 
 function isValid(key) {
-  if (/[^a-z]/g.test(key) || key.length === 0) throw new Error("Bad key");
+  if (/[^a-z]/g.test(key) || key.length === 0)
+    throw new Error("Bad key");
+  
   return key;
 };
 
 function translate(text, key, createIdx) {
   var code = "";
+  
   for (var i = 0; i < text.length; i++) {
     var newIdx = createIdx(letters.indexOf(text[i]), letters.indexOf(key[i]));
-    if (newIdx > 25) code += letters[newIdx - 26];
-    else if (newIdx < 0) code += letters[newIdx + 26];
-    else code += letters[newIdx];
+
+    if (newIdx > 25)
+      code += letters[newIdx - 26];
+    else if (newIdx < 0)
+      code += letters[newIdx + 26];
+    else
+      code += letters[newIdx];
   }
+
   return code;
 };
 
