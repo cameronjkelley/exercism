@@ -1,10 +1,10 @@
-var letters = "abcdefghijklmnopqrstuvwxyz";
+var alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 function newKey() {
   var key = "";
   
   while (key.length < 101)
-    key += letters[Math.floor(Math.random() * 26)];
+    key += alphabet[Math.floor(Math.random() * 26)];
   
   return key;
 };
@@ -20,14 +20,14 @@ function translate(text, key, createIdx) {
   var code = "";
   
   for (var i = 0; i < text.length; i++) {
-    var newIdx = createIdx(letters.indexOf(text[i]), letters.indexOf(key[i]));
+    var newIdx = createIdx(alphabet.indexOf(text[i]), alphabet.indexOf(key[i]));
 
     if (newIdx > 25)
-      code += letters[newIdx - 26];
+      code += alphabet[newIdx - 26];
     else if (newIdx < 0)
-      code += letters[newIdx + 26];
+      code += alphabet[newIdx + 26];
     else
-      code += letters[newIdx];
+      code += alphabet[newIdx];
   }
 
   return code;
