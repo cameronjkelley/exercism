@@ -7,17 +7,21 @@ class OcrNumbers
 	{
 		string[] inputArray = input.Split('\n');
 		string[] outputArray = new string[inputArray[0].Length];
+		
 		for (int i = 0; i < inputArray.Length - 1; i++)
 		{
 			int counter = 0;
+			
 			for (int j = 0; j < inputArray[i].Length; j += 3)
 			{
-				string temp = "";
 				counter++;
+				string temp = "";
+				
 				for (int k = 0; k < 3; k++)
 				{
 					temp += inputArray[i][j + k];
 				}
+				
 				outputArray[counter] += temp;
 			}
 		}
@@ -26,8 +30,11 @@ class OcrNumbers
 		foreach (string num in outputArray)
 		{
 			if (!string.IsNullOrEmpty(num))
+			{
 				numbers += Numbers.ContainsKey(num) ? Numbers[num] : "?";
+			}
 		}
+		
 		return numbers;
 	}
 
