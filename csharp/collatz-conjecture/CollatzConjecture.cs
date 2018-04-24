@@ -9,9 +9,9 @@ public static class CollatzConjecture
 			throw new ArgumentException();
 		}
 
-		int steps = 1;
+		int steps = 0;
 
-		while (number != 1)
+		while (number > 1)
 		{
 			if (number % 2 == 0)
 				number /= 2;
