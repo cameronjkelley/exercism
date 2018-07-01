@@ -3,12 +3,12 @@ class Prime
     raise ArgumentError if n < 1
 
     primes = [2, 3]
-    num = 3
+    current = 3
 
     while n > primes.length
-      num += 2
-       if self.is_prime?(num)
-         primes.push(num)
+      current += 2
+       if self.is_prime?(current)
+         primes << current
        end
     end
 
@@ -16,10 +16,11 @@ class Prime
   end
 
   def self.is_prime?(x)
-    for i in 3..Math.sqrt(x)
-      return false if x % i === 0
-      i += 2
+    range = 3..Math.sqrt(x)
+    range.step(2) do |y|
+      return false if x % y === 0
     end
+
     true
   end
 end
