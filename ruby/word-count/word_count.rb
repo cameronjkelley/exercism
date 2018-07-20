@@ -1,14 +1,10 @@
 class Phrase
   def initialize(phrase)
-    @array = phrase.downcase.scan(/\w+'\w|\w+/).flatten
-    @count = Hash.new(0)
+    @phrase = phrase.downcase.scan(/\w+'\w|\w+/)
   end
 
   def word_count
-    @array.each do |word|
-      @count[word] += 1
-    end
-    @count
+    @phrase.each_with_object(Hash.new(0)) { |word, acc| acc[word] += 1 }
   end
 end
 
