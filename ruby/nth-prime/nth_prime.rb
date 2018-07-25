@@ -16,8 +16,8 @@ class Prime
   end
 
   def self.is_prime?(x)
-    (3..Math.sqrt(x)).step(2) do |y|
-      return false if x % y === 0
+    (3..Math.sqrt(x)).step(2).all? do |y|
+      x % y != 0
     end
   end
 end
