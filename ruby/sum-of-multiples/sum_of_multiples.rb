@@ -1,15 +1,13 @@
 class SumOfMultiples
-  def initialize(x = nil, y = nil, z = nil)
-    @x = x
-    @y = y
-    @z = z
+  def initialize(*factors)
+    @factors = factors
   end
 
   def to(a)
     (0...a).find_all { |num|
-      (@x == nil ? false : num % @x == 0) ||
-      (@y == nil ? false : num % @y == 0) ||
-      (@z == nil ? false : num % @z == 0)
+      @factors.any? { |x|
+        num % x == 0
+      }
     }.sum
   end
 end
