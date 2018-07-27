@@ -1,11 +1,11 @@
 class SumOfMultiples
-  def initialize(*factors)
-    @factors = factors
+  def initialize(*multiples)
+    @multiples = multiples
   end
 
   def to(a)
     (0...a).find_all { |num|
-      @factors.any? { |x|
+      @multiples.any? { |x|
         num % x == 0
       }
     }.sum
