@@ -1,6 +1,7 @@
 class Bob
   def self.hey(remark)
     stripped = remark.strip
+    
     if asking_forcefully?(stripped)
       "Calm down, I know what I'm doing!"
     elsif asking?(stripped)
@@ -15,12 +16,12 @@ class Bob
   end
 
   private
-    def self.asking?(remark)
-      remark[-1] == "?"
-    end
-
     def self.asking_forcefully?(remark)
       remark[-1] == "?" && remark == remark.upcase && /[A-Z]/.match?(remark)
+    end
+  
+    def self.asking?(remark)
+      remark[-1] == "?"
     end
 
     def self.yelling?(remark)
