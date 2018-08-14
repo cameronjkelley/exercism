@@ -1,11 +1,11 @@
 class Anagram
   def initialize(input)
-    @input = input
+    @input = input.downcase
   end
 
   def match(possibles)
     possibles.map { |word|
-       word if word.downcase != @input.downcase && word.downcase.chars.sort == @input.downcase.chars.sort
+       word if word.downcase != @input && word.downcase.chars.sort == @input.chars.sort
     }.compact
   end
 end
