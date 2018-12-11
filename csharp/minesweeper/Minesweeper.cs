@@ -26,7 +26,7 @@ namespace Minesweeper
                         else
                         {
                             List<Tuple<int, int>> perimeter = CreatePerimeter(input, row, col);
-                            int mineCount = PerimeterCount(input, perimeter);
+                            int mineCount = CountPerimeter(input, perimeter);
 
                             sb.Append(mineCount > 0 ? mineCount.ToString() : " ");
                         }
@@ -37,22 +37,7 @@ namespace Minesweeper
 
             return output.ToArray();
         }
-
-        private static int PerimeterCount(string[] minefield, List<Tuple<int, int>> perimeter)
-        {
-            int perimeterCount = 0;
-
-            foreach(Tuple<int, int> coordinate in perimeter)
-            {
-                if (minefield[coordinate.Item1][coordinate.Item2] == '*')
-                {
-                    perimeterCount++;
-                }
-            }
         
-            return perimeterCount;
-        }
-
         private static List<Tuple<int, int>> CreatePerimeter(string[] minefield, int row, int column)
         {
             int prevRow = row -1,
@@ -84,6 +69,21 @@ namespace Minesweeper
             }
 
             return perimeter;
+        }
+
+        private static int CountPerimeter(string[] minefield, List<Tuple<int, int>> perimeter)
+        {
+            int perimeterCount = 0;
+
+            foreach(Tuple<int, int> coordinate in perimeter)
+            {
+                if (minefield[coordinate.Item1][coordinate.Item2] == '*')
+                {
+                    perimeterCount++;
+                }
+            }
+        
+            return perimeterCount;
         }
     }
 }
