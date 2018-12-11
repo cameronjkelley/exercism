@@ -11,25 +11,28 @@ namespace Minesweeper
         {
             List<string> output = new List<string>();
 
-            for (int row = 0; row < input.Length; row++)
+            if (input.Length > 0)
             {
-                StringBuilder sb = new StringBuilder("");
-                
-                for (int col = 0; col < input[row].Length; col++)
+                for (int row = 0; row < input.Length; row++)
                 {
-                    if (input[row][col] == '*')
+                    StringBuilder sb = new StringBuilder("");
+
+                    for (int col = 0; col < input[row].Length; col++)
                     {
-                        sb.Append('*');
+                        if (input[row][col] == '*')
+                        {
+                            sb.Append('*');
+                        }
+                        else
+                        {
+                            List<Tuple<int, int>> perimeter = CreatePerimeter(input, row, col);
+                            int mineCount = PerimeterCount(input, perimeter);
+
+                            sb.Append(mineCount > 0 ? mineCount.ToString() : " ");
+                        }
                     }
-                    else
-                    {
-                        List<Tuple<int, int>> perimeter = CreatePerimeter(input, row, col);
-                        int mineCount = PerimeterCount(input, perimeter);
-                        
-                        sb.Append(mineCount > 0 ? mineCount.ToString() : " ");
-                    }
+                    output.Add(sb.ToString());
                 }
-                output.Add(sb.ToString());
             }
 
             return output.ToArray();
