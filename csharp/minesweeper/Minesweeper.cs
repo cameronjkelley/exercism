@@ -14,6 +14,7 @@ namespace Minesweeper
             for (int row = 0; row < input.Length; row++)
             {
                 StringBuilder sb = new StringBuilder("");
+                
                 for (int col = 0; col < input[row].Length; col++)
                 {
                     if (input[row][col] == '*')
@@ -24,6 +25,7 @@ namespace Minesweeper
                     {
                         List<Tuple<int, int>> perimeter = CreatePerimeter(input, row, col);
                         int mineCount = PerimeterCount(input, perimeter);
+                        
                         sb.Append(mineCount > 0 ? mineCount.ToString() : " ");
                     }
                 }
