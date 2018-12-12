@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 public enum YachtCategory
@@ -21,8 +21,6 @@ public static class YachtGame
 {
     public static int Score(int[] dice, YachtCategory category)
     {
-        int score;
-
         switch (category)
         {
             case YachtCategory.Ones:
@@ -31,36 +29,39 @@ public static class YachtGame
             case YachtCategory.Fours:
             case YachtCategory.Fives:
             case YachtCategory.Sixes:
-                score = dice.Where(x => x == (int)category).Sum();
-                break;
+                return dice.Where(x => x == (int)category).Sum();
             case YachtCategory.FullHouse:
-                score = dice.Distinct().Count() == 2 &&
-                        (dice.Where(x => x == dice.Max()).Count() == 3 || dice.Where(x => x == dice.Min()).Count() == 3) ?
-                            dice.Sum() : 0;
-                break;
+                return IsFullHouse(dice) ? dice.Sum() : 0;
             case YachtCategory.FourOfAKind:
-                score = dice.Where(x => x == dice.Max()).Count() >= 4 ||
-                        dice.Where(x => x == dice.Min()).Count() >= 4 ?
-                            dice.FirstOrDefault(x => dice.Count(y => x == y) >= 4) * 4 : 0;
-                break;
+                return IsFourOfAKind(dice) ? GetFourOfAKindTotal(dice) : 0;
             case YachtCategory.LittleStraight:
-                score = dice.Distinct().Count() == 5 && dice.Sum() == 15 ? 30 : 0;
-                break;
+                return IsLittleStraight(dice) ? 30 : 0;
             case YachtCategory.BigStraight:
-                score = dice.Distinct().Count() == 5 && dice.Sum() == 20 ? 30 : 0;
-                break;
+                return IsBigStraight(dice) ? 30 : 0;
             case YachtCategory.Choice:
-                score = dice.Sum();
-                break;
+                return dice.Sum();
             case YachtCategory.Yacht:
-                score = dice.Distinct().Count() == 1 ? 50 : 0;
-                break;
+                return dice.Distinct().Count() == 1 ? 50 : 0;
             default:
-                score = 0;
-                break;
+                return 0;
         }
-
-        return score;
     }
-}
 
+    private static bool IsFullHouse(int[] dice) => 
+        dice.Distinct().Count() == 2 && (dice.Where(x => x == dice.Max()).Count() == 3 || dice.Where(x => x == dice.Min()).Count() == 3);
+
+    private static bool IsFourOfAKind(int[] dice) => 
+        dice.Where(x => x == dice.Max()).Count() >= 4 || dice.Where(x => x == dice.Min()).Count() >= 4;
+
+    private static int GetFourOfAKindTotal(int[] dice) => 
+        dice.FirstOrDefault(x => dice.Count(y => x == y) >= 4) * 4;
+
+    private static bool IsLittleStraight(int[] dice) => 
+        IsStraight(dice, 15);
+
+    private static bool IsBigStraight(int[] dice) => 
+        IsStraight(dice, 20);
+
+    private static bool IsStraight(int[] dice, int sum) => 
+        dice.Distinct().Count() == 5 && dice.Sum() == sum;
+}
