@@ -1,52 +1,36 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using System.Linq;
 
 namespace Poker
 {
     public static class Poker
     {
-        public static IEnumerable<string> BestHands(IEnumerable<string> hands)
+        public static IEnumerable<string> BestHands(IEnumerable<string> input)
         {
-            Dictionary<string, List<Card>> cardsByHand = new Dictionary<string, List<Card>>();
-            Dictionary<string, Ranks> ranksByHand = new Dictionary<string, Ranks>();
+            List<Hand> hands = new List<Hand>();
 
-            foreach (string hand in hands)
+            foreach (string hand in input)
             {
-                cardsByHand.Add(hand, GetCards(hand));
-                ranksByHand.Add(hand, RankHand(cardsByHand[hand]));
+                Hand newHand = new Hand(hand, Card.GetCards(hand));
+                newHand.Rank = RankHand(newHand.Cards);
+                hands.Add(newHand);
             }
 
-            string[] bestHands = ranksByHand.Where(hand => hand.Value == ranksByHand.Values.Max()).Select(hand => hand.Key).ToArray();
+            Hand[] bestHands = hands.Where(hand => (int)hand.Rank == hands.Max(h => (int)h.Rank)).Select(h => h).ToArray();
 
             if (bestHands.Length > 1)
             {
-                Dictionary<string, int> scores = new Dictionary<string, int>();
-
-                foreach (string hand in bestHands)
+                foreach (Hand hand in bestHands)
                 {
-                    scores.Add(hand, ScoreHand(ranksByHand[hand], cardsByHand[hand]));
+                    hand.Score = ScoreHand(hand.Rank, hand.Cards);
                 }
 
-                return scores.Where(score => score.Value == scores.Values.Max()).Select(score => score.Key).ToArray();
-            }
-            else
-            {
-                return bestHands;
-            }
-        }
-
-        private static List<Card> GetCards(string hand)
-        {
-            List<Card> cards = new List<Card>();
-
-            foreach (string card in hand.Split(" "))
-            {
-                cards.Add(Card.ParseCard(card));
+                bestHands = bestHands.Where(hand => hand.Score == bestHands.Max(h => h.Score)).ToArray();
             }
 
-            return cards.ToList();
+            return bestHands.Select(hand => hand.ToString()).ToArray();
         }
 
         private static Ranks RankHand(List<Card> cards)
@@ -104,7 +88,7 @@ namespace Poker
 
         private static bool IsFlush(List<Card> cards) => cards.All(c => c.Suit == cards[0].Suit);
 
-        private static bool IsStraight(List<Card> cards) => IsLowStraight(cards) || !cards.OrderBy(c => c.Value).Select((c, i) => c.Value - i).Distinct().Skip(1).Any();
+        private static bool IsStraight(List<Card> cards) => !cards.OrderBy(c => c.Value).Select((c, i) => c.Value - i).Distinct().Skip(1).Any() || IsLowStraight(cards);
 
         private static bool IsLowStraight(List<Card> cards) => cards.Select(c => c.Value).OrderBy(c => c).SequenceEqual(new[] { 2, 3, 4, 5, 14 });
 
@@ -112,7 +96,27 @@ namespace Poker
 
         private static bool IsTwoPair(List<Card> cards) => cards.GroupBy(c => c.Value).Count(g => g.Count() == 2) == 2;
 
-        private static bool IsPair(List<Card> cards) => cards.GroupBy(c => c.Value).Count(g => g.Count() == 2) == 1;
+        private static bool IsPair(List<Card> cards) => cards.GroupBy(c => c.Value).Any(g => g.Count() == 2);
+    }
+
+    class Hand
+    {
+        private readonly string _hand;
+
+        public Hand(string hand, List<Card> cards)
+        {
+            _hand = hand;
+            Cards = cards;
+        }
+
+        public List<Card> Cards { get; private set; }
+        public Ranks Rank { get; set; }
+        public int Score { get; set; }
+
+        public override string ToString()
+        {
+            return _hand;
+        }
     }
 
     struct Card
@@ -126,14 +130,26 @@ namespace Poker
         public int Value { get; private set; }
         public string Suit { get; private set; }
 
-        public static Card ParseCard(string card)
+        public static List<Card> GetCards(string input)
+        {
+            List<Card> cards = new List<Card>();
+
+            foreach (string card in input.Split(" "))
+            {
+                cards.Add(ParseCard(card));
+            }
+
+            return cards.ToList();
+        }
+
+        private static Card ParseCard(string input)
         {
             Dictionary<string, int> faceCards = new Dictionary<string, int> { { "J", 11 }, { "Q", 12 }, { "K", 13 }, { "A", 14 } };
 
-            string cardValue = card.Substring(0, card.Length - 1);
-            int value = faceCards.Keys.Contains(cardValue) ? faceCards[cardValue] : int.Parse(cardValue);
+            string sub = input.Substring(0, input.Length - 1);
+            int value = faceCards.Keys.Contains(sub) ? faceCards[sub] : int.Parse(sub);
 
-            string suit = card.Substring(card.Length - 1);
+            string suit = input.Substring(input.Length - 1);
 
             return new Card(value, suit);
         }
