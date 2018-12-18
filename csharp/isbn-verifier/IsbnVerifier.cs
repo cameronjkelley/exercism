@@ -8,13 +8,12 @@ namespace IsbnVerifier
     {
         public static bool IsValid(string number)
         {
-            Regex regex = new Regex(@"[\dxX]");
+            Regex regex = new Regex(@"[\dx]", RegexOptions.IgnoreCase);
             List<int> numbers = new List<int>();
 
             foreach (Match match in regex.Matches(number))
             {
-                if ((match.Value == "X" || match.Value == "x") && 
-                    match.Index == number.Length - 1)
+                if (match.Value.ToLower() == "x" && match.Index == number.Length - 1)
                 {
                     numbers.Add(10);
                 }
