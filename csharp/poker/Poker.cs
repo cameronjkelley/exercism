@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using System.Text;
 
 namespace Poker
 {
@@ -9,14 +9,16 @@ namespace Poker
     {
         public static IEnumerable<string> BestHands(IEnumerable<string> hands)
         {
-            Dictionary<string, Ranks> ranks = new Dictionary<string, Ranks>();
+            Dictionary<string, List<Card>> cardsByHand = new Dictionary<string, List<Card>>();
+            Dictionary<string, Ranks> ranksByHand = new Dictionary<string, Ranks>();
 
             foreach (string hand in hands)
             {
-                ranks.Add(hand, RankHand(hand));
+                cardsByHand.Add(hand, GetCards(hand));
+                ranksByHand.Add(hand, RankHand(cardsByHand[hand]));
             }
 
-            string[] bestHands = ranks.Where(hand => hand.Value == ranks.Values.Max()).Select(hand => hand.Key).ToArray();
+            string[] bestHands = ranksByHand.Where(hand => hand.Value == ranksByHand.Values.Max()).Select(hand => hand.Key).ToArray();
 
             if (bestHands.Length > 1)
             {
@@ -24,7 +26,7 @@ namespace Poker
 
                 foreach (string hand in bestHands)
                 {
-                    scores.Add(hand, ScoreHand(hand, ranks[hand]));
+                    scores.Add(hand, ScoreHand(ranksByHand[hand], cardsByHand[hand]));
                 }
 
                 return scores.Where(score => score.Value == scores.Values.Max()).Select(score => score.Key).ToArray();
@@ -35,9 +37,20 @@ namespace Poker
             }
         }
 
-        private static Ranks RankHand(string hand)
+        private static List<Card> GetCards(string hand)
         {
-            List<Card> cards = GetCards(hand);
+            List<Card> cards = new List<Card>();
+
+            foreach (string card in hand.Split(" "))
+            {
+                cards.Add(Card.ParseCard(card));
+            }
+
+            return cards.ToList();
+        }
+
+        private static Ranks RankHand(List<Card> cards)
+        {
             Ranks rank;
 
             if (IsStraightFlush(cards)) rank = Ranks.StraightFlush;
@@ -53,9 +66,8 @@ namespace Poker
             return rank;
         }
 
-        private static int ScoreHand(string hand, Ranks rank)
+        private static int ScoreHand(Ranks rank, List<Card> cards)
         {
-            List<Card> cards = GetCards(hand);
             int score;
 
             switch (rank)
@@ -84,24 +96,6 @@ namespace Poker
             return score;
         }
 
-        private static List<Card> GetCards(string hand)
-        {
-            Dictionary<string, int> faceCards = new Dictionary<string, int> { { "J", 11 }, { "Q", 12 }, { "K", 13 }, { "A", 14 } };
-            List<Card> cards = new List<Card>();
-
-            foreach (string card in hand.Split(" "))
-            {
-                string cardValue = card.Substring(0, card.Length - 1);
-                int value = faceCards.Keys.Contains(cardValue) ? faceCards[cardValue] : int.Parse(cardValue);
-
-                string suit = card.Substring(card.Length - 1);
-
-                cards.Add(new Card(value, suit));
-            }
-
-            return cards.ToList();
-        }
-
         private static bool IsStraightFlush(List<Card> cards) => IsStraight(cards) && IsFlush(cards);
 
         private static bool IsFourOfAKind(List<Card> cards) => cards.GroupBy(c => c.Value).Any(g => g.Count() == 4);
@@ -112,7 +106,7 @@ namespace Poker
 
         private static bool IsStraight(List<Card> cards) => IsLowStraight(cards) || !cards.OrderBy(c => c.Value).Select((c, i) => c.Value - i).Distinct().Skip(1).Any();
 
-        private static bool IsLowStraight(List<Card> cards) => cards.All(card => new int[] { 2, 3, 4, 5, 14 }.Contains(card.Value));
+        private static bool IsLowStraight(List<Card> cards) => cards.Select(c => c.Value).OrderBy(c => c).SequenceEqual(new[] { 2, 3, 4, 5, 14 });
 
         private static bool IsThreeOfAKind(List<Card> cards) => cards.GroupBy(c => c.Value).Any(g => g.Count() == 3);
 
@@ -131,10 +125,21 @@ namespace Poker
 
         public int Value { get; private set; }
         public string Suit { get; private set; }
+
+        public static Card ParseCard(string card)
+        {
+            Dictionary<string, int> faceCards = new Dictionary<string, int> { { "J", 11 }, { "Q", 12 }, { "K", 13 }, { "A", 14 } };
+
+            string cardValue = card.Substring(0, card.Length - 1);
+            int value = faceCards.Keys.Contains(cardValue) ? faceCards[cardValue] : int.Parse(cardValue);
+
+            string suit = card.Substring(card.Length - 1);
+
+            return new Card(value, suit);
+        }
     }
 
     enum Ranks
     {
         HighCard, Pair, TwoPair, ThreeOfAKind, Straight, Flush, FullHouse, FourOfAKind, StraightFlush
     }
-}
