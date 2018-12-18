@@ -40,14 +40,14 @@ namespace Poker
             List<Card> cards = GetCards(hand);
             Ranks rank;
 
-            if (HasStraightFlush(cards)) rank = Ranks.StraightFlush;
-            else if (HasFourOfAKind(cards)) rank = Ranks.FourOfAKind;
-            else if (HasFullHouse(cards)) rank = Ranks.FullHouse;
-            else if (HasFlush(cards)) rank = Ranks.Flush;
-            else if (HasStraight(cards)) rank = Ranks.Straight;
-            else if (HasThreeOfAKind(cards)) rank = Ranks.ThreeOfAKind;
-            else if (HasTwoPair(cards)) rank = Ranks.TwoPair;
-            else if (HasPair(cards)) rank = Ranks.Pair;
+            if (IsStraightFlush(cards)) rank = Ranks.StraightFlush;
+            else if (IsFourOfAKind(cards)) rank = Ranks.FourOfAKind;
+            else if (IsFullHouse(cards)) rank = Ranks.FullHouse;
+            else if (IsFlush(cards)) rank = Ranks.Flush;
+            else if (IsStraight(cards)) rank = Ranks.Straight;
+            else if (IsThreeOfAKind(cards)) rank = Ranks.ThreeOfAKind;
+            else if (IsTwoPair(cards)) rank = Ranks.TwoPair;
+            else if (IsPair(cards)) rank = Ranks.Pair;
             else rank = Ranks.HighCard;
 
             return rank;
@@ -102,23 +102,23 @@ namespace Poker
             return cards.ToList();
         }
 
-        private static bool HasStraightFlush(List<Card> cards) => HasStraight(cards) && HasFlush(cards);
+        private static bool IsStraightFlush(List<Card> cards) => IsStraight(cards) && IsFlush(cards);
 
-        private static bool HasFourOfAKind(List<Card> cards) => cards.GroupBy(c => c.Value).Any(g => g.Count() == 4);
+        private static bool IsFourOfAKind(List<Card> cards) => cards.GroupBy(c => c.Value).Any(g => g.Count() == 4);
 
-        private static bool HasFullHouse(List<Card> cards) => HasThreeOfAKind(cards) && HasPair(cards);
+        private static bool IsFullHouse(List<Card> cards) => IsThreeOfAKind(cards) && IsPair(cards);
 
-        private static bool HasFlush(List<Card> cards) => cards.All(c => c.Suit == cards[0].Suit);
+        private static bool IsFlush(List<Card> cards) => cards.All(c => c.Suit == cards[0].Suit);
 
-        private static bool HasStraight(List<Card> cards) => IsLowStraight(cards) || !cards.OrderBy(c => c.Value).Select((c, i) => c.Value - i).Distinct().Skip(1).Any();
+        private static bool IsStraight(List<Card> cards) => IsLowStraight(cards) || !cards.OrderBy(c => c.Value).Select((c, i) => c.Value - i).Distinct().Skip(1).Any();
 
         private static bool IsLowStraight(List<Card> cards) => cards.All(card => new int[] { 2, 3, 4, 5, 14 }.Contains(card.Value));
 
-        private static bool HasThreeOfAKind(List<Card> cards) => cards.GroupBy(c => c.Value).Any(g => g.Count() == 3);
+        private static bool IsThreeOfAKind(List<Card> cards) => cards.GroupBy(c => c.Value).Any(g => g.Count() == 3);
 
-        private static bool HasTwoPair(List<Card> cards) => cards.GroupBy(c => c.Value).Count(g => g.Count() == 2) == 2;
+        private static bool IsTwoPair(List<Card> cards) => cards.GroupBy(c => c.Value).Count(g => g.Count() == 2) == 2;
 
-        private static bool HasPair(List<Card> cards) => cards.GroupBy(c => c.Value).Count(g => g.Count() == 2) == 1;
+        private static bool IsPair(List<Card> cards) => cards.GroupBy(c => c.Value).Count(g => g.Count() == 2) == 1;
     }
 
     struct Card
