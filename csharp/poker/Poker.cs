@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace Poker
@@ -10,33 +9,27 @@ namespace Poker
         public static IEnumerable<string> BestHands(IEnumerable<string> input)
         {
             List<Hand> hands = new List<Hand>();
-
             foreach (string hand in input)
             {
                 Hand newHand = new Hand(hand, Card.GetCards(hand));
                 newHand.Rank = RankHand(newHand.Cards);
                 hands.Add(newHand);
             }
-
             Hand[] bestHands = hands.Where(hand => (int)hand.Rank == hands.Max(h => (int)h.Rank)).Select(h => h).ToArray();
-
             if (bestHands.Length > 1)
             {
                 foreach (Hand hand in bestHands)
                 {
                     hand.Score = ScoreHand(hand.Rank, hand.Cards);
                 }
-
                 bestHands = bestHands.Where(hand => hand.Score == bestHands.Max(h => h.Score)).ToArray();
             }
-
             return bestHands.Select(hand => hand.ToString()).ToArray();
         }
 
         private static Ranks RankHand(List<Card> cards)
         {
             Ranks rank;
-
             if (IsStraightFlush(cards)) rank = Ranks.StraightFlush;
             else if (IsFourOfAKind(cards)) rank = Ranks.FourOfAKind;
             else if (IsFullHouse(cards)) rank = Ranks.FullHouse;
@@ -46,38 +39,7 @@ namespace Poker
             else if (IsTwoPair(cards)) rank = Ranks.TwoPair;
             else if (IsPair(cards)) rank = Ranks.Pair;
             else rank = Ranks.HighCard;
-
             return rank;
-        }
-
-        private static int ScoreHand(Ranks rank, List<Card> cards)
-        {
-            int score;
-
-            switch (rank)
-            {
-                case Ranks.StraightFlush:
-                case Ranks.FourOfAKind:
-                case Ranks.FullHouse:
-                case Ranks.Flush:
-                case Ranks.ThreeOfAKind:
-                    score = cards.Sum(c => c.Value);
-                    break;
-                case Ranks.Straight:
-                    score = IsLowStraight(cards) ? 15 : cards.Sum(c => c.Value);
-                    break;
-                case Ranks.TwoPair:
-                    score = cards.GroupBy(c => c.Value).Where(g => g.Count() == 2).Sum(g => g.Key);
-                    break;
-                case Ranks.Pair:
-                    score = cards.GroupBy(c => c.Value).FirstOrDefault(g => g.Count() == 2).Key;
-                    break;
-                default:
-                    score = cards.Max(c => c.Value);
-                    break;
-            }
-
-            return score;
         }
 
         private static bool IsStraightFlush(List<Card> cards) => IsStraight(cards) && IsFlush(cards);
@@ -97,66 +59,87 @@ namespace Poker
         private static bool IsTwoPair(List<Card> cards) => cards.GroupBy(c => c.Value).Count(g => g.Count() == 2) == 2;
 
         private static bool IsPair(List<Card> cards) => cards.GroupBy(c => c.Value).Any(g => g.Count() == 2);
-    }
 
-    class Hand
-    {
-        private readonly string _hand;
-
-        public Hand(string hand, List<Card> cards)
+        private static int ScoreHand(Ranks rank, List<Card> cards)
         {
-            _hand = hand;
-            Cards = cards;
-        }
-
-        public List<Card> Cards { get; private set; }
-        public Ranks Rank { get; set; }
-        public int Score { get; set; }
-
-        public override string ToString()
-        {
-            return _hand;
-        }
-    }
-
-    struct Card
-    {
-        public Card(int value, string suit)
-        {
-            Value = value;
-            Suit = suit;
-        }
-
-        public int Value { get; private set; }
-        public string Suit { get; private set; }
-
-        public static List<Card> GetCards(string input)
-        {
-            List<Card> cards = new List<Card>();
-
-            foreach (string card in input.Split(" "))
+            int score;
+            switch (rank)
             {
-                cards.Add(ParseCard(card));
+                case Ranks.StraightFlush:
+                case Ranks.FourOfAKind:
+                case Ranks.FullHouse:
+                case Ranks.Flush:
+                case Ranks.ThreeOfAKind:
+                case Ranks.Straight:
+                    score = IsLowStraight(cards) ? 15 : cards.Sum(c => c.Value);
+                    break;
+                case Ranks.TwoPair:
+                    score = cards.GroupBy(c => c.Value).Where(g => g.Count() == 2).Sum(g => g.Key);
+                    break;
+                case Ranks.Pair:
+                    score = cards.GroupBy(c => c.Value).FirstOrDefault(g => g.Count() == 2).Key;
+                    break;
+                default:
+                    score = (int)Math.Pow(cards.Max(c => c.Value), 2) + cards.Sum(c => c.Value);
+                    break;
+            }
+            return score;
+        }
+
+        private class Hand
+        {
+            private readonly string _hand;
+
+            public Hand(string hand, List<Card> cards)
+            {
+                _hand = hand;
+                Cards = cards;
             }
 
-            return cards.ToList();
+            public List<Card> Cards { get; private set; }
+            public Ranks Rank { get; set; }
+            public int Score { get; set; }
+
+            public override string ToString()
+            {
+                return _hand;
+            }
         }
 
-        private static Card ParseCard(string input)
+        private struct Card
         {
-            Dictionary<string, int> faceCards = new Dictionary<string, int> { { "J", 11 }, { "Q", 12 }, { "K", 13 }, { "A", 14 } };
+            public Card(int value, string suit)
+            {
+                Value = value;
+                Suit = suit;
+            }
 
-            string sub = input.Substring(0, input.Length - 1);
-            int value = faceCards.Keys.Contains(sub) ? faceCards[sub] : int.Parse(sub);
+            public int Value { get; private set; }
+            public string Suit { get; private set; }
 
-            string suit = input.Substring(input.Length - 1);
+            public static List<Card> GetCards(string input)
+            {
+                List<Card> cards = new List<Card>();
+                foreach (string card in input.Split(" "))
+                {
+                    cards.Add(ParseCard(card));
+                }
+                return cards.ToList();
+            }
 
-            return new Card(value, suit);
+            private static Card ParseCard(string input)
+            {
+                Dictionary<string, int> faceCards = new Dictionary<string, int> { { "J", 11 }, { "Q", 12 }, { "K", 13 }, { "A", 14 } };
+                string sub = input.Substring(0, input.Length - 1);
+                int value = faceCards.Keys.Contains(sub) ? faceCards[sub] : int.Parse(sub);
+                string suit = input.Substring(input.Length - 1);
+                return new Card(value, suit);
+            }
         }
-    }
 
-    enum Ranks
-    {
-        HighCard, Pair, TwoPair, ThreeOfAKind, Straight, Flush, FullHouse, FourOfAKind, StraightFlush
+        private enum Ranks
+        {
+            HighCard, Pair, TwoPair, ThreeOfAKind, Straight, Flush, FullHouse, FourOfAKind, StraightFlush
+        }
     }
 }
