@@ -48,7 +48,7 @@ namespace Poker
 
         private static bool IsFullHouse(List<Card> cards) => IsThreeOfAKind(cards) && IsPair(cards);
 
-        private static bool IsFlush(List<Card> cards) => cards.All(c => c.Suit == cards[0].Suit);
+        private static bool IsFlush(List<Card> cards) => cards.All(c => c.Suit == cards.First().Suit);
 
         private static bool IsStraight(List<Card> cards) => !cards.OrderBy(c => c.Value).Select((c, i) => c.Value - i).Distinct().Skip(1).Any() || IsLowStraight(cards);
 
@@ -69,21 +69,26 @@ namespace Poker
                 case Ranks.FourOfAKind:
                 case Ranks.FullHouse:
                 case Ranks.Flush:
-                case Ranks.ThreeOfAKind:
                 case Ranks.Straight:
+                case Ranks.ThreeOfAKind:
                     score = IsLowStraight(cards) ? 15 : cards.Sum(c => c.Value);
                     break;
                 case Ranks.TwoPair:
-                    score = cards.GroupBy(c => c.Value).Where(g => g.Count() == 2).Sum(g => g.Key);
+                    score = cards.GroupBy(c => c.Value).Where(g => g.Count() == 2).Sum(g => (int)Math.Pow(g.Key, 2)) + GetKickers(cards);
                     break;
                 case Ranks.Pair:
-                    score = cards.GroupBy(c => c.Value).FirstOrDefault(g => g.Count() == 2).Key;
+                    score = cards.GroupBy(c => c.Value).FirstOrDefault(g => g.Count() == 2).Key + GetKickers(cards);
                     break;
                 default:
                     score = (int)Math.Pow(cards.Max(c => c.Value), 2) + cards.Sum(c => c.Value);
                     break;
             }
             return score;
+        }
+
+        private static int GetKickers(List<Card> cards)
+        {
+            return (int)cards.GroupBy(c => c.Value).Where(g => g.Count() == 1).Average(g => g.Key);
         }
 
         private class Hand
@@ -129,8 +134,8 @@ namespace Poker
 
             private static Card ParseCard(string input)
             {
-                Dictionary<string, int> faceCards = new Dictionary<string, int> { { "J", 11 }, { "Q", 12 }, { "K", 13 }, { "A", 14 } };
                 string sub = input.Substring(0, input.Length - 1);
+                Dictionary<string, int> faceCards = new Dictionary<string, int> { { "J", 11 }, { "Q", 12 }, { "K", 13 }, { "A", 14 } };
                 int value = faceCards.Keys.Contains(sub) ? faceCards[sub] : int.Parse(sub);
                 string suit = input.Substring(input.Length - 1);
                 return new Card(value, suit);
