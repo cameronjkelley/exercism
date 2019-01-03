@@ -1,2 +1,2 @@
 # exercism
-[Exercism.io](http://exercism.io) Solutions
+<a href="http://exercism.io" target="_blank">Exercism.io</a> Solutions
