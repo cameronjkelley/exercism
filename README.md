@@ -1,2 +1,2 @@
 # exercism
-[Exercism.io](http://exercism.io){:target="_blank"} Solutions
+[Exercism.io](http://exercism.io) Solutions
