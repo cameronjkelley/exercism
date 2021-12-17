@@ -1,8 +1,7 @@
 export const largestProduct = (series, span) => {
   if (span === 0) return 1;
   else if (span < 0) throw new Error('Span must be greater than zero');
-  else if (series.length < span) throw new Error('Span must be smaller than string length');
-  else if (series.length === 0 && span > 0) throw new Error('Span must be smaller than string length');
+  else if (series.length === 0 || series.length < span) throw new Error('Span must be smaller than string length');
   else if (!new RegExp(`\\d{${series.length}}`, 'g').test(series)) throw new Error('Digits input must only contain digits');
   else {
     let lsp = 0;
